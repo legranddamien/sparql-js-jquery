@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SPARQL Javascript Test</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script src="sparql.js"></script>
+		<script>
+		
+			function table(vars, result)
+			{
+				$('body').append('<table></table>');
+				var table = $('table');
+				
+				var str = "<tr>";
+				for(var i = 0; i < vars.length; i++)
+				{
+					str += '<th>'+vars[i]+'</th>';
+				}
+				
+				str += "</tr>";
+				
+				table.append(str);
+				
+				str = "";
+				for(var i = 0; i < result.length; i++)
+				{
+					str += "<tr>";
+					
+					for(var j = 0; j < vars.length; j++)
+					{
+						if(result[i].hasOwnProperty(vars[j])) str += '<td>'+result[i][vars[j]]['value']+'</td>';
+						else str += '<td></td>';
+					}
+					
+					str += "</tr>";
+				}
+				
+				table.append(str);
+			}
+			
+			$(function(){
+				
+			//TEST 1 //
+				
+			/*	var test = new SPARQL();
+				test.setInfo($('h1'));
+				
+				test.distinct(true)
+				.variable("?x").variable("?y").variable("?ylabel").variable("?z")
+					.where("?x", "?y", "?z")
+					.optionalWhere("?y", "rdfs:label", "?ylabel")
+					.filter("?y!=<http://dbpedia.org/ontology/wikiPageWikiLink>")
+					.filter("?x=<http://dbpedia.org/resource/Metallica> || ?x=<http://dbpedia.org/resource/Nine_Inch_Nails>");
+					
+				test.execute(function(data, info)
+				{
+					console.log(data);
+					console.log(info);
+					
+					var vars =  data.head.vars;
+					var result = data.results.bindings;
+					
+					info.remove();
+					
+					table(vars, result);
+					
+				});
+				
+				console.log(test.sparql); 
+			*/
+			
+			//TEST 2 //
+			
+				var artists = ["Metallica", "Vitalic", "The Doors"];
+				
+				var sparqls = [];
+				
+				for(var i = 0; i < artists.length; i++)
+				{
+					var test = new SPARQL();
+					test.info = $('h1');
+					test.variable("?t")
+						.where("?t", "rdfs:label", '"' + artists[i] + '"@en')
+						.where("?t", "rdf:type", "?ttype")
+						.filter("?ttype=<http://dbpedia.org/ontology/Band> || ?ttype=<http://dbpedia.org/ontology/MusicalArtist>");
+					
+					sparqls.push(test);
+				}
+				
+				for(var i = 1; i < sparqls.length; i++)
+				{
+					sparqls[0].union(sparqls[i]);
+				}
+					
+				sparqls[0].execute(function(data, info){
+					var vars =  data.head.vars;
+					var result = data.results.bindings;
+					
+					info.remove();
+					
+					table(vars, result);
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<h1>SPARQL running. Please wait</h1>
+	</body>
+</html>
