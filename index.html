@@ -40,7 +40,7 @@
 			
 			$(function(){
 				
-			//TEST 1 //
+			// TEST 1 //
 				
 			/*	var test = new SPARQL();
 				test.setInfo($('h1'));
@@ -69,8 +69,9 @@
 				console.log(test.sparql); 
 			*/
 			
-			//TEST 2 //
+			// TEST 2 //
 			
+			/*
 				var artists = ["Metallica", "Vitalic", "The Doors"];
 				
 				var sparqls = [];
@@ -100,6 +101,23 @@
 					
 					table(vars, result);
 				});
+			*/
+				
+			// TEST 3 //
+			
+				var request = new SPARQL();
+				request.info = "hello world";
+			
+				request.variable("?x").variable("?y")
+						.where("<http://dbpedia.org/resource/Metallica>", "?x", "?y");
+						
+				request.execute(function(data, info){
+					
+					console.log(data); //Json by default
+					console.log(info); //Print hello world
+					
+				});
+				
 			});
 			
 		</script>
