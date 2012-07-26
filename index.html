@@ -41,8 +41,9 @@
 			$(function(){
 				
 			// TEST 1 //
-				
-			/*	var test = new SPARQL();
+			
+			/*	
+				var test = new SPARQL();
 				test.setInfo($('h1'));
 				
 				test.distinct(true)
@@ -105,18 +106,24 @@
 				
 			// TEST 3 //
 			
+			
 				var request = new SPARQL();
-				request.info = "hello world";
+				request.info = $('h1');
 			
 				request.variable("?x").variable("?y")
 						.where("<http://dbpedia.org/resource/Metallica>", "?x", "?y");
 						
 				request.execute(function(data, info){
 					
-					console.log(data); //Json by default
-					console.log(info); //Print hello world
+					var vars =  data.head.vars;
+					var result = data.results.bindings;
+					
+					info.remove();
+					
+					table(vars, result);
 					
 				});
+			
 				
 			});
 			
