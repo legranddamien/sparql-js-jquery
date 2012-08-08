@@ -161,7 +161,8 @@ function SPARQL()
 	};
 	
 	this.execute = function(callback) {
-		this.sparql = this.build();
+		
+		if(this.sparql == "") this.sparql = this.build();
 		var cur = this;
 		var data = {};
 		data[this.formatParam] = this.format;
@@ -173,6 +174,7 @@ function SPARQL()
 			dataType: this.format
 		}).done(function( data ) {
 			callback(data, cur.info);
+			cur.sparql = "";
 		});
 	}
 	

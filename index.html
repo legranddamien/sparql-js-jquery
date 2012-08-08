@@ -106,7 +106,7 @@
 				
 			// TEST 3 //
 			
-			
+			/*
 				var request = new SPARQL();
 				request.info = $('h1');
 			
@@ -114,6 +114,24 @@
 						.where("<http://dbpedia.org/resource/Metallica>", "?x", "?y");
 						
 				request.execute(function(data, info){
+					
+					var vars =  data.head.vars;
+					var result = data.results.bindings;
+					
+					info.remove();
+					
+					table(vars, result);
+					
+				});
+				
+			*/
+				
+				var query = "SELECT DISTINCT ?x, ?y, ?ylabel, ?z WHERE { ?x ?y ?z . OPTIONAL {?y rdfs:label ?ylabel} . FILTER ( ?y!=<http://dbpedia.org/ontology/wikiPageWikiLink> ) . FILTER ( lang(?ylabel ) = 'en' ) . FILTER ( ?x=<http://dbpedia.org/resource/The_Downward_Spiral> || ?x=<http://dbpedia.org/resource/Pretty_Lights> || ?x=<http://dbpedia.org/resource/Metallica> || ?x=<http://dbpedia.org/resource/Radiohead> || ?x=<http://dbpedia.org/resource/Daft_Punk> || ?x=<http://dbpedia.org/resource/Rammstein> || ?x=<http://dbpedia.org/resource/Red_Hot_Chili_Peppers> || ?x=<http://dbpedia.org/resource/Linkin_Park> || ?x=<http://dbpedia.org/resource/Gorillaz> || ?x=<http://dbpedia.org/resource/Green_Day> || ?x=<http://dbpedia.org/resource/Benny_Benassi> || ?x=<http://dbpedia.org/resource/Serj_Tankian> || ?x=<http://dbpedia.org/resource/Soulwax> || ?x=<http://dbpedia.org/resource/The_Faint> || ?x=<http://dbpedia.org/resource/Matchbook_Romance> || ?x=<http://dbpedia.org/resource/Massive_Attack> || ?x=<http://dbpedia.org/resource/A_Perfect_Circle> || ?x=<http://dbpedia.org/resource/Street_Sweeper_Social_Club> || ?x=<http://dbpedia.org/resource/Fall_Out_Boy> || ?x=<http://dbpedia.org/resource/Marilyn_Manson> || ?x=<http://dbpedia.org/resource/Deftones> || ?x=<http://dbpedia.org/resource/John_Dahlb%C3%A4ck> || ?x=<http://dbpedia.org/resource/Mr._Oizo> || ?x=<http://dbpedia.org/resource/Nine_Inch_Nails> || ?x=<http://dbpedia.org/resource/Surkin> || ?x=<http://dbpedia.org/resource/The_Dark_Knight_Rises> || ?x=<http://dbpedia.org/resource/How_High> || ?x=<http://dbpedia.org/resource/Ali_G_Indahouse> || ?x=<http://dbpedia.org/resource/Fight_Club> || ?x=<http://dbpedia.org/resource/The_Matrix_Reloaded> || ?x=<http://dbpedia.org/resource/The_IT_Crowd> || ?x=<http://dbpedia.org/resource/Nip/Tuck> || ?x=<http://dbpedia.org/resource/Futurama> || ?x=<http://dbpedia.org/resource/The_Big_Bang_Theory> || ?x=<http://dbpedia.org/resource/How_I_Met_Your_Mother> || ?x=<http://dbpedia.org/resource/South_Park> || ?x=<http://dbpedia.org/resource/Rob_Sheridan> || ?x=<http://dbpedia.org/resource/ITunes> ) }";
+				var req = new SPARQL();
+				req.sparql = query;
+				req.info = $('h1');
+				
+				req.execute(function(data, info){
 					
 					var vars =  data.head.vars;
 					var result = data.results.bindings;
