@@ -174,7 +174,7 @@ function SPARQL()
 			dataType: this.format
 		}).done(function( data ) {
 			var ret = data;
-			if(generateDBPedia == true && this.format == 'json')
+			if(generateDBPedia == true && cur.format == 'json')
 			{
 				ret = [];
 				var vars = [];
