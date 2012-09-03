@@ -160,7 +160,7 @@ function SPARQL()
 		return sp;
 	};
 	
-	this.execute = function(callback) {
+	this.execute = function(callback, generateDBPedia) {
 		
 		if(this.sparql == "") this.sparql = this.build();
 		var cur = this;
@@ -173,7 +173,25 @@ function SPARQL()
 			data: data,
 			dataType: this.format
 		}).done(function( data ) {
-			callback(data, cur.info);
+			var ret = data;
+			if(generateDBPedia == true && this.format == 'json')
+			{
+				ret = [];
+				var vars = [];
+				for(var i = 0; i < data.results.bindings.length; i++)
+				{
+					var obj = {};
+					for(var j = 0; j < data.head.vars.length; j++)
+					{
+						obj[data.head.vars[j]] = data.results.bindings[i][data.head.vars[j]]['value'];
+					}
+					
+					ret.push(obj);
+				}
+				
+			}	
+		
+			callback(ret, cur.info);
 			cur.sparql = "";
 		});
 	}

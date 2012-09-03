@@ -133,14 +133,17 @@
 				
 				req.execute(function(data, info){
 					
-					var vars =  data.head.vars;
+					console.log(data);
+					
+					/*var vars =  data.head.vars;
 					var result = data.results.bindings;
+					*/
 					
 					info.remove();
 					
-					table(vars, result);
+					//table(vars, result);
 					
-				});
+				}, true);
 			
 				
 			});
